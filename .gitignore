@@ -8,4 +8,5 @@
 /captures
 .externalNativeBuild
 .idea/
-README
+README.md
+/app
