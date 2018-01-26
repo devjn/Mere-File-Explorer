@@ -44,14 +44,14 @@ public class MainActivity extends FileManagerActivity {
                     getSupportFragmentManager().popBackStack();
                     return true;
                 } else return false;
-            case R.id.action_dialog:
-                FileManager.with(this).showHidden(false).setContentType("image/*").
-                        showDialogFileManager(path -> Toast.makeText(MainActivity.this, "onResult: " + path, Toast.LENGTH_SHORT).show());
-                return true;
-            case R.id.action_activity:
-                FileManager.with(this).showHidden(false).setContentType("image/*").
-                        startFileManager(path -> Toast.makeText(MainActivity.this, "onResult: " + path, Toast.LENGTH_SHORT).show());
-                return true;
+//            case R.id.action_dialog:
+//                FileManager.with(this).showHidden(false).setContentType(FileManager.Filter.IMAGE)
+//                        .showDialogFileManager(path -> Toast.makeText(MainActivity.this, "onResult: " + path, Toast.LENGTH_SHORT).show());
+//                return true;
+//            case R.id.action_activity:
+//                FileManager.with(this).showHidden(false).setContentType("image/*")
+//                        .startFileManager(path -> Toast.makeText(MainActivity.this, "onResult: " + path, Toast.LENGTH_SHORT).show());
+//                return true;
         }
 
         return false;
