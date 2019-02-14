@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -89,7 +90,10 @@ public class FileManagerDialog extends DialogFragment implements DataLoader.Data
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(mRootView);
 
-        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> dismiss());
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+            FileManager.deliverResult(requestHolder.options.getId(), mPath);
+            dismiss();
+        });
 
         builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> dismiss());
 
@@ -107,7 +111,7 @@ public class FileManagerDialog extends DialogFragment implements DataLoader.Data
     private void initView() {
         mToolbar = mRootView.findViewById(R.id.toolbar);
         mRecyclerView = mRootView.findViewById(R.id.list);
-        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        mLayoutManager = new GridLayoutManager(getContext(), 3);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
 

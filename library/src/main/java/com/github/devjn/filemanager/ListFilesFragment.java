@@ -31,7 +31,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.Formatter;
 import android.util.Log;
@@ -44,11 +43,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.devjn.filemanager.utils.IOUtils;
 import com.github.devjn.filemanager.utils.IntentUtils;
 import com.github.devjn.filemanager.utils.Utils;
 import com.github.devjn.filemanager.utils.ViewUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +78,7 @@ public class ListFilesFragment extends Fragment implements DataLoader.DataListen
 
     private View mRootView;
     private RecyclerView mRecyclerView;
-    private GridLayoutManager mLayoutManager;
+    private RecyclerView.LayoutManager mLayoutManager;
     private FileListAdapter mAdapter;
 
     private ActionMode actionMode;
@@ -331,6 +332,33 @@ public class ListFilesFragment extends Fragment implements DataLoader.DataListen
             DetailsDialogFragment.newInstance(getSelectedData(mAdapter.getSelectedItems()))
                     .show(getActivity().getSupportFragmentManager(), "details");
             actionMode.finish();
+            return true;
+        } else if (i == R.id.action_copy_to) {
+            FileManager.with(this).showDialogFileManager(path -> {
+                Log.i("TAG", "DialogCAllback " + mAdapter.getSelectedItems().size() + " Patth = " + path);
+                for (int selectedItem : mAdapter.getSelectedItems()) {
+                    FileData fileData = mData.get(selectedItem);
+                    Log.i("TAG", "fileData : " + fileData);
+                    try {
+                        IOUtils.copyFile(fileData, path);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            return true;
+        } else if (i == R.id.action_move_to) {
+            FileManager.with(this).showDialogFileManager(path -> {
+                Log.i("TAG", "DialogCAllback " + mAdapter.getSelectedItems().size() + " Patth = " + path);
+                for (int selectedItem : mAdapter.getSelectedItems()) {
+                    FileData fileData = mData.get(selectedItem);
+                    try {
+                        IOUtils.moveFile(fileData, path);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
             return true;
         } else {
             return false;

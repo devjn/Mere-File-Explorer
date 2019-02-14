@@ -25,4 +25,17 @@
         android:title="@string/action_details"
         app:showAsAction="never">
     </item>
+
+    <item
+        android:id="@+id/action_copy_to"
+        android:orderInCategory="400"
+        android:title="@string/action_copy_to"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_move_to"
+        android:orderInCategory="500"
+        android:title="@string/action_move_to"
+        app:showAsAction="never" />
+
 </menu>
