@@ -18,4 +18,5 @@
 <paths>
     <external-path name="share" path="/" />
     <external-path name="external_files" path="."/>
+    <root-path name="root" path="." />
 </paths>
